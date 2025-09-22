@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Personal Pages</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            color: #333;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 视频背景样式 */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        /* 内容容器 */
+        .content-container {
+            position: relative;
+            z-index: 1;
+            padding: 20px;
+        }
+
+        /* 导航栏样式 - JetBrains风格 */
+        nav {
+            background: rgba(255, 255, 255, 0.1);
+            /* 半透明背景 */
+            backdrop-filter: blur(10px);
+            /* 毛玻璃效果 */
+            padding: 15px 20px;
+            border-radius: 20px;
+            /* 导航栏圆角 */
+            margin: 20px auto;
+            max-width: 1200px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            /* 使导航项水平居中 */
+        }
+
+        nav ul li {
+            margin: 0 20px;
+            /* 调整导航项之间的间距 */
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            color: #333;
+            font-weight: 500;
+        }
+
+        nav ul li:hover {
+            background: rgba(0, 0, 0, 0.05);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        nav ul li::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        nav ul li:hover::after {
+            width: 80%;
+        }
+
+        /* 个人页面部分样式 - JetBrains风格 */
+        .personal-pages {
+            padding: 40px 20px;
+            background: rgba(240, 240, 240, 0.7);
+            /* 半透明浅紫色 */
+            backdrop-filter: blur(15px);
+            /* 毛玻璃效果 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* 使整个内容区域居中 */
+            gap: 30px;
+            /* 照片和文字之间的间距 */
+            border-radius: 16px;
+            margin: 20px auto;
+            max-width: 1200px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .personal-pages img {
+            width: 130px;
+            /* 图片宽度保持不变 */
+            height: 180px;
+            /* 图片高度保持不变 */
+            transform: scale(1.0);
+            /* 放大图片显示更多身体信息 */
+            object-fit: cover;
+            /* 保持图片的宽高比，并缩放以适应容器 */
+            border-radius: 10%;
+            /* 使图片变成圆形 */
+            padding: 8px;
+            /* 减少内边距让照片紧贴白圈 */
+            background-color: rgba(255, 255, 255, 0.3);
+            /* 添加半透明背景来显示圆形框 */
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            /* 添加边框增强圆形效果 */
+            object-position: center 40%;
+            /* 让照片往下移，露出更多身体信息，显示半身 */
+        }
+
+        .personal-pages-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            /* 图片和文字之间的间距 */
+            font-family: FangSong;
+            /* 仿宋字体 */
+            font-size: 20px;
+            /* 文字加大 */
+            line-height: 1.0;
+            /* 增加行间距 */
+            align-self: center;
+            margin: 0 auto;
+            /* 板块左右居中 */
+        }
+
+        .personal-text {
+            text-align: left;
+            /* 文字左对齐 */
+        }
+
+        .personal-pages-left {
+            text-align: left;
+            /* 标题左对齐 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+            /* 设置最小高度确保垂直居中 */
+        }
+
+        /* 技能部分样式 - JetBrains风格 */
+        .skill {
+            padding: 40px 20px;
+            background: hsla(31, 50%, 76%, 0.7);
+            /* 半透明浅灰色 */
+            backdrop-filter: blur(15px);
+            /* 毛玻璃效果 */
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            min-height: 300px;
+            /* 设置最小高度与第一个板块一致 */
+            border-radius: 16px;
+            margin: 20px auto;
+            max-width: 1200px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .skill-items {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+            /* 技能内容在页面中间 */
+            flex: 1;
+            /* 占据剩余空间 */
+        }
+
+        .skill-item {
+            margin: 0;
+            padding: 30px;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            /* 毛玻璃背景 */
+            backdrop-filter: blur(10px);
+            /* 毛玻璃效果 */
+            border: 3px solid rgba(255, 255, 255, 0.5);
+            /* 加粗边框 */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            /* 添加阴影效果 */
+            transition: transform 0.3s ease;
+        }
+
+        .skill-item:hover {
+            transform: scale(1.1);
+            /* 鼠标悬停时放大 */
+        }
+
+        /* 联系信息部分样式 - JetBrains风格 */
+        .contact {
+            text-align: center;
+            padding: 30px 20px;
+            background: hsla(23, 83%, 56%, 0.2);
+            /* 半透明灰色 */
+            backdrop-filter: blur(15px);
+            /* 毛玻璃效果 */
+            font-family: Arial, sans-serif;
+            /* 统一为与导航栏相同的字体 */
+            min-height: 150px;
+            /* 高度调整为原来的一半 */
+            border-radius: 16px;
+            margin: 20px auto;
+            max-width: 1200px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 视频背景 -->
+    <video class="video-background" autoplay muted loop>
+        <source src="背景视频3.mp4" type="video/mp4">
+        您的浏览器不支持视频标签。
+    </video>
+
+    <!-- 内容容器 -->
+    <div class="content-container">
+        <!-- 导航栏 -->
+        <nav>
+            <ul>
+                <li>首页</li>
+                <li>比赛经历</li>
+                <li>实践经历</li>
+                <li>活动经历</li>
+            </ul>
+        </nav>
+
+        <!-- 个人页面部分 -->
+        <div class="personal-pages">
+            <div class="personal-pages-left">
+                <h1>My Personal Pages</h1>
+            </div>
+            <div class="personal-pages-content">
+                <img src="证件照.jpg" alt="证件照">
+                <div class="personal-text">
+                    <p>·山东潍坊人,山东师范大学信息科学与工程学院2024级本科生</p>
+                    <p>·信工学院实验中心志愿者，计工本2402卫生委员</p>
+                    <p>·所学课程：数据结构、计算机组成原理、计算机操作系统</p>
+                    <p>·我的兴趣爱好：看小说、摄影、音乐、打羽毛球</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 技能部分 -->
+        <div class="skill">
+            <h1>Skill</h1>
+            <div class="skill-items">
+                <div class="skill-item">前端</div>
+                <div class="skill-item">后期</div>
+                <div class="skill-item">摄影</div>
+                <div class="skill-item">剪辑</div>
+            </div>
+        </div>
+
+        <!-- 联系信息部分 -->
+        <div class="contact" style="color: rgba(255, 255, 255, 0.603);">
+            <h2>Contact</h2>
+            <p>我的联系电话：183xxxx1038</p>
+            <p>我的邮箱：277xxx5460@qq.com</p>
+            </p>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>
